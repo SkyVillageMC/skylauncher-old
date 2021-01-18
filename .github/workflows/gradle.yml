@@ -25,11 +25,7 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew installDist
     - name: Zip Release
-      uses: TheDoctor0/zip-release@0.4.1
-      with:
-        filename: 'skylauncher.zip'
-        path: 'build/install/skylauncher'
-        directory: 'build/install'
+      run: cd build/install && zip -r skylauncher.zip
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.0
       with:
