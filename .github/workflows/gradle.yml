@@ -25,7 +25,7 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew installDist
     - name: Zip Release
-      run: cd build/install && zip -r skylauncher.zip
+      run: cd build/install && zip -r skylauncher.zip .
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.0
       with:
