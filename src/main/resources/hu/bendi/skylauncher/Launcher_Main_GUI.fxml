@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" id="AnchorPane" fx:id="mainBackground" prefHeight="450.0" prefWidth="450.0"
+            styleClass="main_scene" xmlns="http://javafx.com/javafx/8.0.60"
+            fx:controller="hu.bendi.skylauncher.controller.MainController">
+    <HBox prefHeight="18.0" prefWidth="253.0">
+        <Pane prefHeight="25.0" prefWidth="46.0"/>
+    </HBox>
+    <BorderPane prefHeight="450.0" prefWidth="450.0">
+        <top>
+            <Pane prefHeight="25.0" prefWidth="200.0" styleClass="top_title_bar" BorderPane.alignment="CENTER">
+                <Label layoutX="15.0" layoutY="3.0" styleClass="label-black" text="SkyVillage Launcher"/>
+                <Button fx:id="exit" layoutX="422.0" layoutY="4.0" minHeight="18.0" minWidth="18.0"
+                        mnemonicParsing="false" prefHeight="18.0" prefWidth="18.0" onMouseClicked="#launchExit"
+                        styleClass="exit_button">
+                    <font>
+                        <Font size="9.0"/>
+                    </font>
+                </Button>
+                <Button fx:id="minimize" layoutX="403.0" layoutY="4.0" minHeight="18.0" minWidth="18.0"
+                        mnemonicParsing="false" prefHeight="18.0" prefWidth="18.0" onMouseClicked="#minimise"
+                        styleClass="minimize_button">
+                    <font>
+                        <Font size="9.0"/>
+                    </font>
+                </Button>
+            </Pane>
+        </top>
+        <bottom>
+            <Pane prefHeight="20.0" prefWidth="200.0" styleClass="top_title_bar" BorderPane.alignment="CENTER">
+                <ProgressBar fx:id="progress" styleClass="progress" layoutX="0.0" layoutY="1.0" prefWidth="450.0"></ProgressBar>
+                <Label fx:id="status" layoutY="1.0" layoutX="7.0" text="Stásusz: Tétlen" styleClass="label-black"></Label>
+            </Pane>
+        </bottom>
+        <left>
+            <Pane prefWidth="5.0" styleClass="top_title_bar" BorderPane.alignment="CENTER"/>
+        </left>
+        <right>
+            <Pane prefWidth="5.0" styleClass="top_title_bar" BorderPane.alignment="CENTER"/>
+        </right>
+        <center>
+            <Pane prefHeight="450.0" prefWidth="450.0" styleClass="colorOverlay" BorderPane.alignment="CENTER">
+                <Pane layoutX="96.0" layoutY="75.0" prefHeight="227.0" prefWidth="250.0"
+                      styleClass="main_login_area">
+                    <TextField fx:id="username" layoutX="25.0" layoutY="75.0" onKeyTyped="#kt_username"
+                               prefHeight="26.0" prefWidth="200.0" promptText="Felhasználónév"
+                               styleClass="main_username">
+                        <tooltip>
+                            <Tooltip fx:id="tt_username" prefWidth="300.0" wrapText="true"/>
+                        </tooltip>
+                    </TextField>
+                    <PasswordField fx:id="password" layoutX="25.0" layoutY="111.0"
+                               prefHeight="26.0" prefWidth="200.0" promptText="Jelszó"
+                               styleClass="main_username">
+                        <tooltip>
+                            <Tooltip fx:id="tt_password" prefWidth="300.0" wrapText="true"/>
+                        </tooltip>
+                    </PasswordField>
+                    <Button id="launch" fx:id="launch" layoutX="135.0" layoutY="151.0"
+                            mnemonicParsing="false" prefHeight="26.0" onMouseClicked="#play"
+                            prefWidth="90.0" styleClass="whiteTextTheme" text="Játék">
+                        <tooltip>
+                            <Tooltip fx:id="tt_play" prefWidth="300.0" wrapText="true"/>
+                        </tooltip>
+                    </Button>
+                    <Button fx:id="options" layoutX="25.0" layoutY="152.0" mnemonicParsing="false"
+                            prefHeight="25.0" prefWidth="90.0" onMouseClicked="#showOptions"
+                            styleClass="whiteTextTheme" text="Beállítások">
+                        <tooltip>
+                            <Tooltip fx:id="tt_options" prefWidth="300.0" text="Empty Tooltip"
+                                     wrapText="true"/>
+                        </tooltip>
+                    </Button>
+                </Pane>
+                <ImageView fx:id="playerAvatarImage" fitHeight="100.0" fitWidth="100.0" layoutX="171.0"
+                           layoutY="39.0" pickOnBounds="true" preserveRatio="true" styleClass="avatar_image">
+                    <Image url="@css/images/steve.png"/>
+                </ImageView>
+            </Pane>
+        </center>
+    </BorderPane>
+</AnchorPane>
