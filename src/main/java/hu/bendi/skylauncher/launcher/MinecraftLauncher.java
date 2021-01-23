@@ -52,7 +52,7 @@ public class MinecraftLauncher {
 
     public List<String> getArgs(String accesToken, String username) {
         List<String> args = new ArrayList<>();
-        args.add("java");//("C:\\Program Files\\Java\\jdk-12.0.2\\bin\\javaw.exe");
+        args.add("C:\\Program Files\\AdoptOpenJDK\\jdk-15.0.1.9-hotspot\\bin\\javaw.exe");
         args.add("-Xmx" + LauncherSettings.customRam +"M");
 //        args.add("-XX:+UseConcMarkSweepGC");
 //        args.add("-XX:+CMSIncrementalMode");

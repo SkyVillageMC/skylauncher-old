@@ -73,7 +73,7 @@ public class Updater {
 
     public void checkForUpdates() throws IOException {
         canPlay = false;
-        FileUtils.copyURLToFile(new URL("https://bendimester23.tk/assets/1.14.4.json"),
+        FileUtils.copyURLToFile(new URL("http://46.139.50.88/assets/1.14.4.json"),
                 new File(Constants.GAME_DIR,"version.json"));
         String json = FileUtils.readFileToString(
                 new File(Constants.GAME_DIR,"version.json"), Charset.defaultCharset());
@@ -135,7 +135,7 @@ public class Updater {
         currentAction = "Tartalom frissítése";
         progress = 0;
 
-        FileUtils.copyURLToFile(new URL("https://bendimester23.tk/assets/content.json"),
+        FileUtils.copyURLToFile(new URL("http://46.139.50.88/assets/content.json"),
                 new File(Constants.GAME_DIR,"content.json"));
         String cJson = FileUtils.readFileToString(
                 new File(Constants.GAME_DIR,"content.json"), Charset.defaultCharset());
