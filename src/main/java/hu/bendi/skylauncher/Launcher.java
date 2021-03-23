@@ -89,7 +89,7 @@ public class Launcher extends Application {
     }
 
     private void initSettings(final Stage stage, Scene scene) {
-        stage.getIcons().add(new Image(Launcher.class.getResourceAsStream("css/images/app_icon_1.png")));
+        stage.getIcons().add(new Image(Launcher.class.getResourceAsStream("css/images/icon.png")));
         scene.setOnMousePressed(event -> {
             xOffset = stage.getX() - event.getScreenX();
             yOffset = stage.getY() - event.getScreenY();

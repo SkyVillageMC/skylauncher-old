@@ -152,7 +152,7 @@ public class Updater {
             if (!f.exists()) {
                 System.out.println("[Launcher] Downloading content " + mod.fileName);
                 FileUtils.copyURLToFile(new URL(mod.url), f);
-            }else if (!Crypto.calcSHA1(f).toLowerCase().equals(mod.sha1.toLowerCase())) {
+            }else if (!Crypto.calcSHA1(f).equalsIgnoreCase(mod.sha1)) {
                 System.out.println("[Launcher] Updating content " + mod.fileName);
                 FileUtils.copyURLToFile(new URL(mod.url), f);
             }
