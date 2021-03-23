@@ -152,13 +152,13 @@ public class MainController implements Initializable {
             final Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.UNDECORATED);
-            stage.getIcons().add(new Image(Launcher.class.getResourceAsStream("css/images/app_icon_1.png")));
+            stage.getIcons().add(new Image(Launcher.class.getResourceAsStream("css/images/icon.png")));
             stage.setTitle("SkyVillage Launcher - Beállítások");
             Scene sceneOptions = new Scene(optionsGUI);
-            stage.setMinWidth(400);
-            stage.setMinHeight(500);
-            stage.setMaxWidth(400);
-            stage.setMaxHeight(500);
+            stage.setMinWidth(450);
+            stage.setMinHeight(330);
+            stage.setMaxWidth(450);
+            stage.setMaxHeight(330);
             stage.setResizable(false);
 
             stage.setScene(sceneOptions);
@@ -200,4 +200,7 @@ public class MainController implements Initializable {
     }
 
 
+    public void content(MouseEvent mouseEvent) {
+
+    }
 }

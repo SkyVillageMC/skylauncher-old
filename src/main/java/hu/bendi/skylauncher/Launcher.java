@@ -68,14 +68,14 @@ public class Launcher extends Application {
         initSettings(win,scene);
         ThemeManager.setThemeS(scene);
         System.out.println("[Launcher] Checking for updates...");
-        Runnable updater = () -> {
-            try {
-              new Updater().checkForUpdates();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        };
-        executorService.submit(updater);
+        //Runnable updater = () -> {
+        //    try {
+        //      new Updater().checkForUpdates();
+        //    } catch (IOException e) {
+        //        e.printStackTrace();
+        //    }
+        //};
+        //executorService.submit(updater);
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             System.out.println("[Launcher] Shutting down executor.");

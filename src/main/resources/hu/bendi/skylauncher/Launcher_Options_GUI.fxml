@@ -3,12 +3,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" id="AnchorPane" prefHeight="330.0" prefWidth="400.0"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" id="AnchorPane" prefHeight="330.0" prefWidth="450.0"
             xmlns="http://javafx.com/javafx/8.0.131" fx:controller="hu.bendi.skylauncher.controller.OptionsController">
-    <BorderPane prefHeight="330.0" prefWidth="400.0" fx:id="main">
+    <BorderPane prefHeight="330.0" prefWidth="450.0" fx:id="main">
         <top>
             <Pane prefHeight="25.0" prefWidth="500.0" styleClass="top_title_bar" BorderPane.alignment="CENTER">
-                <Button fx:id="optionsExit" layoutX="367.0" layoutY="4.0" maxHeight="18.0" maxWidth="18.0"
+                <Button fx:id="optionsExit" layoutX="417.0" layoutY="4.0" maxHeight="18.0" maxWidth="18.0"
                         minHeight="18.0" minWidth="18.0" mnemonicParsing="false" onAction="#optionsExit"
                         styleClass="exit_button"/>
                 <Pane layoutX="385.0" prefHeight="25.0" prefWidth="15.0"/>
@@ -18,8 +18,8 @@
             </Pane>
         </top>
         <bottom>
-            <Pane prefHeight="35.0" prefWidth="400.0" styleClass="top_title_bar" BorderPane.alignment="CENTER">
-                <Button fx:id="optionsClose" layoutX="321.0" layoutY="5.0" mnemonicParsing="false"
+            <Pane prefHeight="35.0" prefWidth="450.0" styleClass="top_title_bar" BorderPane.alignment="CENTER">
+                <Button fx:id="optionsClose" layoutX="371.0" layoutY="5.0" mnemonicParsing="false"
                         onAction="#optionsClose" prefHeight="25.0" prefWidth="65.0" text="Bezár"/>
                 <Label fx:id="optionStatus" layoutX="15.0" layoutY="9.0" styleClass="label-black"
                        text="Státus: Tétlen"/>
@@ -47,7 +47,7 @@
                                      wrapText="true"/>
                         </tooltip>
                     </CheckBox>
-                    <ComboBox fx:id="themeType" disable="true" layoutX="226.0" layoutY="46.0"
+                    <ComboBox fx:id="themeType" disable="true" layoutX="276.0" layoutY="46.0"
                               onAction="#themeType" prefHeight="25.0" prefWidth="150.0"
                               promptText="Válasz témát"/>
                     <CheckBox fx:id="useThemeType" layoutX="13.0" layoutY="50.0" mnemonicParsing="false"
@@ -57,7 +57,7 @@
                                      wrapText="true"/>
                         </tooltip>
                     </CheckBox>
-                    <Label fx:id="launcherVersion" layoutX="330.0" layoutY="6.0"
+                    <Label fx:id="launcherVersion" layoutX="380.0" layoutY="6.0"
                            onMouseClicked="#mc_launcherVersion" text="Version: 0.00">
                         <font>
                             <Font size="8.0"/>
@@ -90,20 +90,20 @@
                                      wrapText="true"/>
                         </tooltip>
                     </CheckBox>
-                    <TextField fx:id="optionsResolutionWidth" disable="true" layoutX="144.0" layoutY="24.0"
+                    <TextField fx:id="optionsResolutionWidth" disable="true" layoutX="194.0" layoutY="24.0"
                                maxHeight="20.0" minHeight="20.0" onKeyTyped="#kt_optionsResolutionMin"
                                prefHeight="20.0" prefWidth="103.0" promptText="Szélesség"/>
-                    <TextField fx:id="optionsResolutionHeight" disable="true" layoutX="273.0" layoutY="24.0"
+                    <TextField fx:id="optionsResolutionHeight" disable="true" layoutX="323.0" layoutY="24.0"
                                maxHeight="20.0" minHeight="20.0" onKeyTyped="#kt_optionsResolutionMax"
                                prefHeight="20.0" prefWidth="103.0" promptText="Magasság"/>
-                    <Slider fx:id="optionsRamAllocationSlider" disable="true" layoutX="144.0" layoutY="50.0"
+                    <Slider fx:id="optionsRamAllocationSlider" disable="true" layoutX="190.0" layoutY="50.0"
                             maxHeight="20.0" minHeight="20.0" prefHeight="20.0"
-                            prefWidth="232.0" min="1000" max="4000"/>
+                            prefWidth="242.0" min="1000" max="4000"/>
                 </Pane>
                 <Pane prefHeight="3.0" prefWidth="390.0" styleClass="top_title_bar"/>
                 <Pane prefHeight="3.0" prefWidth="390.0" styleClass="top_title_bar"/>
                 <Pane prefHeight="108.0" prefWidth="390.0">
-                    <Label layoutX="10.0" layoutY="2.0" text="Jáva beálítások" textOverrun="CLIP">
+                    <Label layoutX="10.0" layoutY="2.0" text="Java beálítások" textOverrun="CLIP">
                         <font>
                             <Font size="14.0"/>
                         </font>
@@ -124,11 +124,11 @@
                                      wrapText="true"/>
                         </tooltip>
                     </RadioButton>
-                    <TextField fx:id="optionsJavaVersionInput" disable="true" layoutX="139.0" layoutY="24.0"
+                    <TextField fx:id="optionsJavaVersionInput" disable="true" layoutX="189.0" layoutY="24.0"
                                maxHeight="20.0" minHeight="20.0"
                                onMousePressed="#mp_optionsJavaVersionInput" prefHeight="20.0"
                                prefWidth="237.0"/>
-                    <TextField fx:id="optionsJVMArgumentsInput" disable="true" layoutX="139.0"
+                    <TextField fx:id="optionsJVMArgumentsInput" disable="true" layoutX="189.0"
                                layoutY="49.0" maxHeight="20.0" minHeight="20.0" prefHeight="20.0"
                                prefWidth="237.0"/>
                     <RadioButton fx:id="optionsDebugMode" layoutX="10.0" layoutY="75.0"

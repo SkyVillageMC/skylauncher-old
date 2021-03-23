@@ -61,11 +61,11 @@
                             <Tooltip fx:id="tt_password" prefWidth="300.0" wrapText="true"/>
                         </tooltip>
                     </PasswordField>
-                    <Button id="launch" fx:id="launch" layoutX="135.0" layoutY="151.0"
-                            mnemonicParsing="false" prefHeight="26.0" onMouseClicked="#play"
-                            prefWidth="90.0" styleClass="whiteTextTheme" text="Játék">
+                    <Button id="launch" fx:id="custom" layoutX="135.0" layoutY="151.0"
+                            mnemonicParsing="false" prefHeight="26.0" onMouseClicked="#content"
+                            prefWidth="90.0" styleClass="whiteTextTheme" text="Tartalom">
                         <tooltip>
-                            <Tooltip fx:id="tt_play" prefWidth="300.0" wrapText="true"/>
+                            <Tooltip fx:id="tt_custom" prefWidth="300.0" wrapText="true"/>
                         </tooltip>
                     </Button>
                     <Button fx:id="options" layoutX="25.0" layoutY="152.0" mnemonicParsing="false"
@@ -74,6 +74,13 @@
                         <tooltip>
                             <Tooltip fx:id="tt_options" prefWidth="300.0" text="Empty Tooltip"
                                      wrapText="true"/>
+                        </tooltip>
+                    </Button>
+                    <Button id="launch" fx:id="launch" layoutX="25.0" layoutY="190.0"
+                            mnemonicParsing="false" prefHeight="26.0" onMouseClicked="#play"
+                            prefWidth="200.0" styleClass="whiteTextTheme" text="Játék">
+                        <tooltip>
+                            <Tooltip fx:id="tt_play" prefWidth="300.0" wrapText="true"/>
                         </tooltip>
                     </Button>
                 </Pane>
