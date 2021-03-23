@@ -25,6 +25,7 @@ public class Launcher extends Application {
 
     public static Stage mainStage;
     public static Stage optionsStage;
+    public static Stage contentStage;
     public static ExecutorService executorService;
     public static Gson GSON;
     private double xOffset = 0;

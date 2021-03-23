@@ -201,6 +201,43 @@ public class MainController implements Initializable {
 
 
     public void content(MouseEvent mouseEvent) {
+        if (Launcher.contentStage == null) {
+            FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource("Launcher_Customize_GUI.fxml"));
+            Parent customizeGUI = null;
+            try {
+                customizeGUI = fxmlLoader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            final Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.getIcons().add(new Image(Launcher.class.getResourceAsStream("css/images/icon.png")));
+            stage.setTitle("SkyVillage Launcher - Beállítások");
+            Scene sceneOptions = new Scene(customizeGUI);
+            stage.setMinWidth(450);
+            stage.setMinHeight(500);
+            stage.setMaxWidth(450);
+            stage.setMaxHeight(500);
+            stage.setResizable(false);
 
+            stage.setScene(sceneOptions);
+            Launcher.contentStage = stage;
+
+            ThemeManager.setThemeS(sceneOptions);
+
+            sceneOptions.setOnMousePressed(event13 -> {
+                xOffset = stage.getX() - event13.getScreenX();
+                yOffset = stage.getY() - event13.getScreenY();
+            });
+
+            sceneOptions.setOnMouseDragged(event12 -> {
+                stage.setX(event12.getScreenX() + xOffset);
+                stage.setY(event12.getScreenY() + yOffset);
+            });
+            stage.show();
+        } else {
+            Launcher.contentStage.show();
+        }
     }
 }
