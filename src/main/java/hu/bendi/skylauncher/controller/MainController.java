@@ -32,6 +32,8 @@ import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
 
+import static hu.bendi.skylauncher.Launcher.LOGGER;
+
 public class MainController implements Initializable {
 
     @FXML
@@ -68,10 +70,14 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setTextBoxMax();
-        setupBg();
+        try {
+            setupBg();
+        } catch (Exception e) {
+            LOGGER.severe("Error loading background images! \n" + e);
+        }
         Timeline t = new Timeline(new KeyFrame(Duration.millis(100),(e) -> {
             progress.setProgress(Updater.progress);
-            status.setText("Státusz: "+Updater.currentAction);
+            status.setText("St\u00E1tusz: " +Updater.currentAction);
             launch.setDisable(!Updater.canPlay);
         }));
         t.setCycleCount(Timeline.INDEFINITE);
@@ -81,7 +87,7 @@ public class MainController implements Initializable {
 
     @FXML
     private void launchExit(MouseEvent event) {
-        System.out.println("[Launcher] Shutting down!");
+        LOGGER.info("Shutting down!");
         Launcher.mainStage.close();
         System.exit(0);
     }
@@ -153,7 +159,7 @@ public class MainController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.UNDECORATED);
             stage.getIcons().add(new Image(Launcher.class.getResourceAsStream("css/images/icon.png")));
-            stage.setTitle("SkyVillage Launcher - Beállítások");
+            stage.setTitle("SkyVillage Launcher - Be\u00E1ll\u00EDt\u00E1sok");
             Scene sceneOptions = new Scene(optionsGUI);
             stage.setMinWidth(450);
             stage.setMinHeight(330);
@@ -213,7 +219,7 @@ public class MainController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.UNDECORATED);
             stage.getIcons().add(new Image(Launcher.class.getResourceAsStream("css/images/icon.png")));
-            stage.setTitle("SkyVillage Launcher - Beállítások");
+            stage.setTitle("SkyVillage Launcher - Be\u00E1ll\u00EDt\u00E1sok");
             Scene sceneOptions = new Scene(customizeGUI);
             stage.setMinWidth(450);
             stage.setMinHeight(500);

@@ -1,12 +1,12 @@
 package hu.bendi.skylauncher.themes;
 
 public enum Theme {
-    BLUE("blue","Kék"),
+    BLUE("blue", "K\u00E9k"),
     RED("red","Piros"),
-    GRAY("gray","Szürke"),
-    GREEN("green","Zöld"),
+    GRAY("gray", "Sz\u00FCrke"),
+    GREEN("green", "Z\u00F6ld"),
     PURPLE("purple","Lila"),
-    WHITE("white","Fehér");
+    WHITE("white", "Feh\u00E9r");
 
     public String id;
     public String name;

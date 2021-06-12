@@ -4,6 +4,8 @@ import hu.bendi.skylauncher.Launcher;
 import hu.bendi.skylauncher.settings.LauncherSettings;
 import javafx.scene.Scene;
 
+import java.util.Objects;
+
 public class ThemeManager {
     private static ThemeManager instance;
 
@@ -20,17 +22,17 @@ public class ThemeManager {
 
     public static Theme getByName(String name) {
         switch (name) {
-            case "Kék":
+            case "K\u00E9k":
                 return Theme.BLUE;
             case "Piros":
                 return Theme.RED;
-            case "Zöld":
+            case "Z\u00F6ld":
                 return Theme.GREEN;
-            case "Szürke":
+            case "Sz\u00FCrke":
                 return Theme.GRAY;
             case "Lila":
                 return Theme.PURPLE;
-            case "Fehér":
+            case "Feh\u00E9r":
                 return Theme.WHITE;
         }
         return Theme.BLUE;
@@ -42,7 +44,7 @@ public class ThemeManager {
 
     public void apply(Scene scene) {
         scene.getStylesheets().clear();
-        scene.getStylesheets().add(Launcher.class.getResource("css/"+currentTheme+".css").toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(Launcher.class.getResource("css/" + currentTheme + ".css")).toExternalForm());
     }
 
     public void setCurrentTheme(String theme) {

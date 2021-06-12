@@ -33,10 +33,10 @@
         <center>
             <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                 <ListView prefWidth="440.0" prefHeight="450.0" fx:id="content_list">
-                    <Pane prefHeight="100.0" prefWidth="390.0" styleClass="content_list_item">
+                    <Pane prefHeight="100.0" prefWidth="390.0">
                         <HBox>
                             <Pane prefHeight="100" prefWidth="105">
-                                <ImageView fx:id="ico"/>
+                                <ImageView/>
                             </Pane>
                             <VBox maxWidth="275.0" minWidth="275.0" prefHeight="150.0">
                                 <Label minWidth="50.0" minHeight="20.0" text="Name">
@@ -46,17 +46,9 @@
                                 </Label>
                                 <Label>A really long description.</Label>
                             </VBox>
-                            <VBox minWidth="60.0" prefHeight="150.0">
-                                <Button minWidth="50.0" minHeight="50.0" text="+">
-                                    <font>
-                                        <Font size="22"/>
-                                    </font>
-                                </Button>
-                                <Button minWidth="50.0" minHeight="50.0" text="x">
-                                        <font>
-                                            <Font size="22"/>
-                                        </font>
-                                </Button>
+                            <VBox minWidth="60.0" prefHeight="150.0" BorderPane.alignment="CENTER">
+                                <Pane prefHeight="35"/>
+                                <CheckBox scaleX="2" scaleY="2"/>
                             </VBox>
                         </HBox>
                     </Pane>

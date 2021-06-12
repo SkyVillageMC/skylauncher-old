@@ -8,7 +8,7 @@ public class OsUtils {
         return System.getProperty("os.name");
     }
 
-    public OS getOs() {
+    public static OS getOs() {
         if (SystemUtils.IS_OS_WINDOWS) {
             return OS.WIN;
         } else if (SystemUtils.IS_OS_MAC) {

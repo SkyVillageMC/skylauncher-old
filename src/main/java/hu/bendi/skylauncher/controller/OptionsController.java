@@ -163,14 +163,14 @@ public class OptionsController implements Initializable {
     }
 
     private void setupTooltips() {
-        tt_keepLauncherOpen.setText("Pipáld be ezt, hogyha szeretnéd hogy a launcher megnyitva maradjon amíg játszol.");
-        tt_customTheme.setText("Itt választhatsz témát.");
-        tt_debugMode.setText("Ahoz hogy ezt aktiváld, tagja kell lenned a csapatunknak.");
-        tt_javaVersion.setText("A számítógépeden jelenleg telepített Java verziója.");
-        tt_launcherVersion.setText("A launcher telepített verziója.");
-        tt_jvmArgs.setText("Ezt csak akkor álítsd át, ha értessz hozzá.");
-        tt_ramAllocation.setText("A játék által lefoglalható RAM mennyisége.");
-        tt_resolution.setText("A játék alapfelbontása.");
+        tt_keepLauncherOpen.setText("Pip\u00E1ld be ezt, hogyha szeretn\u00E9d hogy a launcher megnyitva maradjon am\u00EDg j\u00E1tszol.");
+        tt_customTheme.setText("Itt v\u00E1laszthatsz t\u00E9m\u00E1t.");
+        tt_debugMode.setText("Ahoz hogy ezt aktiv\u00E1ld, tagja kell lenned a csapatunknak.");
+        tt_javaVersion.setText("A sz\u00E1m\u00EDt\u00F3g\u00E9peden jelenleg telep\u00EDtett Java verzi\u00F3ja.");
+        tt_launcherVersion.setText("A launcher telep\u00EDtett verzi\u00F3ja.");
+        tt_jvmArgs.setText("Ezt csak akkor \u00E1l\u00EDtsd \u00E1t, ha \u00E9rtessz hozz\u00E1.");
+        tt_ramAllocation.setText("A j\u00E1t\u00E9k \u00E1ltal lefoglalhat\u00F3 RAM mennyis\u00E9ge.");
+        tt_resolution.setText("A j\u00E1t\u00E9k alapfelbont\u00E1sa.");
     }
 
     @FXML

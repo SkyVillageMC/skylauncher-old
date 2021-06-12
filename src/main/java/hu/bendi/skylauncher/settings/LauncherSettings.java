@@ -8,6 +8,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import static hu.bendi.skylauncher.Launcher.LOGGER;
+
 public class LauncherSettings {
     //Theme stuff
     public static boolean useCustomTheme = false;
@@ -44,7 +46,7 @@ public class LauncherSettings {
     }
 
     public static void save() throws IOException {
-        System.out.println("[Launcher] Saving settings!");
+        LOGGER.info("Saving settings!");
         properties.setProperty("usecustomtheme", String.valueOf(useCustomTheme));
         properties.setProperty("selectedtheme", selectedTheme.id);
 

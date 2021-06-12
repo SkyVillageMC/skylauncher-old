@@ -15,6 +15,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import static hu.bendi.skylauncher.Launcher.LOGGER;
+
 public class MinecraftLauncher {
 
     public static Version ver;
@@ -32,16 +34,18 @@ public class MinecraftLauncher {
             return;
         }
 
-        Updater.currentAction = "Játék indítása.";
+        Updater.currentAction = "J\u00E1t\u00E9k ind\u00EDt\u00E1sa.";
 
         ProcessBuilder pb = new ProcessBuilder();
         pb.redirectOutput(new File(Constants.GAME_DIR,"game.log"));
         pb.redirectError(new File(Constants.GAME_DIR,"mcerr.log"));
-        pb.command(getArgs("91cffd14-8c2a-39ef-9534-931c99c457f2",username));
+        List<String> args = getArgs("91cffd14-8c2a-39ef-9534-931c99c457f2",username);
+        pb.command(args);
         pb.directory(Constants.GAME_DIR);
+        LOGGER.info("Launching game with arguments: " + Arrays.toString(args.toArray()));
         Process p = pb.start();
         try {
-            p.waitFor(3, TimeUnit.SECONDS);
+            p.waitFor(5, TimeUnit.SECONDS);
             if (!p.isAlive()) System.out.println(p.exitValue());
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -51,24 +55,30 @@ public class MinecraftLauncher {
     }
 
     public List<String> getArgs(String accesToken, String username) {
+        OsUtils.OS os = OsUtils.getOs();
         List<String> args = new ArrayList<>();
-        args.add("java");//("C:\\Program Files\\Java\\jdk-12.0.2\\bin\\javaw.exe");
+        args.add("java");
         args.add("-Xmx" + LauncherSettings.customRam +"M");
-//        args.add("-XX:+UseConcMarkSweepGC");
-//        args.add("-XX:+CMSIncrementalMode");
-//        args.add("-XX:-UseAdaptiveSizePolicy");
-//        args.add("-Xmn128M");
-//        args.add("-XX:HeapDumpPath=MojangTricksIntelDriversForPerformance_javaw.exe_minecraft.exe.heapdump");
-        args.add("\"-Djava.library.path="+Constants.NATIVES_DIR.getPath()+"\"");
+        if (os != OsUtils.OS.LINUX) {
+            args.add("\"-Djava.library.path="+Constants.NATIVES_DIR.getAbsolutePath()+"\"");
+        } else {
+            args.add("-Djava.library.path="+Constants.NATIVES_DIR.getAbsolutePath());
+            args.add("-Dorg.lwjgl.librarypath="+Constants.NATIVES_DIR.getAbsolutePath());
+        }
+
         args.add("-Dminecraft.launcher.brand=java-minecraft-launcher");
-        args.add("\"-Dminecraft.launcher.version=SkyLauncher\"");
+        if (os != OsUtils.OS.LINUX) {
+            args.add("\"-Dminecraft.launcher.version=SkyLauncher\"");
+        } else {
+            args.add("-Dminecraft.launcher.version=SkyLauncher");
+        }
         args.add("-cp");
         args.add(getCp());
         args.add(ver.mainClass);
         args.add("--gameDir");
         args.add(Constants.GAME_DIR.getPath());
         args.add("--assetsDir");
-        args.add(new File(Constants.GAME_DIR,"assets").getPath());
+        args.add(new File(Constants.GAME_DIR,"assets").getAbsolutePath());
         args.add("--assetIndex");
         args.add(ver.assetIndex.id);
         if (LauncherSettings.useCustomResolution) {
@@ -95,20 +105,26 @@ public class MinecraftLauncher {
 
     private String getCp() {
         StringBuilder sb = new StringBuilder();
-        OsUtils.OS os = new OsUtils().getOs();
-        sb.append("\"");
+        OsUtils.OS os = OsUtils.getOs();
+        if (os != OsUtils.OS.LINUX) sb.append("\"");
         Arrays.asList(ver.libraries).forEach(lib -> {
             if (lib.onlyIn != null) {
                 if (lib.onlyIn[0].equalsIgnoreCase("OSX")) {
-                    if (os == OsUtils.OS.OSX) sb.append(Updater.getLibPath(lib.name).getPath()+";");
+                    if (os == OsUtils.OS.OSX) sb.append(Updater.getLibPath(lib.name).getAbsolutePath()).append(os != OsUtils.OS.LINUX ? ";" : ":");
                 } else if (!lib.onlyIn[0].equalsIgnoreCase("OSX")) {
-                    if (os != OsUtils.OS.OSX) sb.append(Updater.getLibPath(lib.name).getPath()+";");
+                    if (os != OsUtils.OS.OSX) sb.append(Updater.getLibPath(lib.name).getAbsolutePath()).append(os != OsUtils.OS.LINUX ? ";" : ":");
                 }
             }else {
-                sb.append(Updater.getLibPath(lib.name).getPath()+";");
+                sb.append(Updater.getLibPath(lib.name).getPath()).append(os != OsUtils.OS.LINUX ? ";" : ":");
             }
         });
-        sb.append(new File(Constants.GAME_DIR,"client.jar").getPath()+"\"");
+        if (os == OsUtils.OS.LINUX) {
+            for (int i = 0; i < 8; i++) {
+                sb.append(new File(Constants.NATIVES_DIR, "native" + i + ".jar")).append(":");
+            }
+        }
+        sb.append(new File(Constants.GAME_DIR,"client.jar").getAbsolutePath());
+        if (os != OsUtils.OS.LINUX) sb.append("\"");
         return sb.toString();
     }
 

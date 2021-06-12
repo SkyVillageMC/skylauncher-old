@@ -9,66 +9,36 @@ import hu.bendi.skylauncher.updater.version.Version;
 import hu.bendi.skylauncher.utils.Constants;
 import hu.bendi.skylauncher.utils.Crypto;
 import hu.bendi.skylauncher.utils.OsUtils;
-import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
-import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.regex.Matcher;
+
+import static hu.bendi.skylauncher.Launcher.LOGGER;
 
 public class Updater {
 
     public static double progress;
-    public static String currentAction = "Tétlen.";
+    public static String currentAction = "T\u00E9tlen.";
     public static boolean canPlay = true;
     private int max;
     private int current;
 
-    private static void unZipFile(File f) {
-        // Create zip file stream.
-        try (ZipArchiveInputStream archive = new ZipArchiveInputStream(
-                new BufferedInputStream(new FileInputStream(f)))) {
-
-            ZipArchiveEntry entry;
-            while ((entry = archive.getNextZipEntry()) != null) {
-                if (!entry.getName().toLowerCase().contains("meta-inf")
-                        || !entry.getName().toLowerCase().contains("manifest")) {
-                    if (!entry.getName().toLowerCase().contains("sha1")
-                            || !entry.getNameSource().name().toLowerCase().contains("git")
-                            || !entry.isDirectory()) {
-
-                        File file = new File(Constants.GAME_DIR, "natives" + File.separator + entry.getName());
-                        String dir = file.toPath().toString().substring(0, file.toPath().toString().lastIndexOf("\\"));
-                        if (!new File(dir).exists()) Files.createDirectories(new File(dir).toPath());
-                        // Stream file content
-                        if (!file.exists()) IOUtils.copy(archive, new FileOutputStream(file));
-
-                    }
-                }
-
-                new File(Constants.GAME_DIR, "natives" + File.separator + "META_INF").delete();
-
-            }
-        } catch (IOException e) {
-            if (!(e instanceof FileNotFoundException)) {
-                e.printStackTrace();
-            }
-        }
-    }
+    private static final OsUtils.OS os = OsUtils.getOs();
 
     public static File getLibPath(String name) {
         File libDir = new File(Constants.GAME_DIR,"libraries");
         String path = name.split(":")[0].replaceAll("\\.",
-                Matcher.quoteReplacement(File.separator))+File.separator+name.split(":")[1]+"\\";
-        if (!new File(libDir,path).exists()) new File(libDir,path).mkdirs();
+                Matcher.quoteReplacement(File.separator))+File.separator+name.split(":")[1]+File.pathSeparator;
         String fileName = name.split(":")[1] + "-" + name.split(":")[2] + ".jar";
-        return new File(libDir,path+fileName);
+        if (path.endsWith(":")) {
+            path = path.substring(0, path.length() - 1) + "/";
+        }
+        return new File(libDir,path + fileName);
     }
 
     public void checkForUpdates() throws IOException {
@@ -82,22 +52,21 @@ public class Updater {
 
         MinecraftLauncher.ver = version;
 
-        currentAction = "Kliens letöltése.";
+        currentAction = "Kliens let\u00F6lt\u00E9se.";
         progress = 0;
         File client = new File(Constants.GAME_DIR,"client.jar");
         if (!client.exists()) {
-            System.out.println("[Launcher] Downloading client jar.");
+            LOGGER.info("Downloading Minecraft jar.");
             FileUtils.copyURLToFile(new URL(version.client.url),client);
         }else {
             if (!Crypto.calcSHA1(client).equalsIgnoreCase(version.client.sha1)) {
                 progress = 0.1;
-                System.out.println("[Launcher] Updating client jar.");
+                LOGGER.info("Updating Minecraft jar");
                 FileUtils.copyURLToFile(new URL(version.client.url),client);
             }
         }
         progress = 1;
-        currentAction = "Könyvtárak letöltése.";
-        OsUtils.OS os = new OsUtils().getOs();
+        currentAction = "K\u00F6nyvt\u00E1rak let\u00F6lt\u00E9se.";
 
         max = version.libraries.length;
         current = 0;
@@ -109,30 +78,18 @@ public class Updater {
                 if (lib.onlyIn[0].equalsIgnoreCase("OSX")) {
                     if (os == OsUtils.OS.OSX) updateLibrary(lib);
                 } else if (!lib.onlyIn[0].equalsIgnoreCase("OSX")) {
-                    if (os != OsUtils.OS.OSX)updateLibrary(lib);
+                    if (os != OsUtils.OS.OSX) updateLibrary(lib);
                 }
             }else {
                 updateLibrary(lib);
             }
         }
 
-        currentAction = "Erõforrások letöltése.";
+        currentAction = "Er\u0151forr\u00E1sok let\u00F6lt\u00E9se.";
         current = 0;
         downloadAssets(new URL(version.assetIndex.url));
-        System.out.println("[Launcher] Update check done.");
-        File folder = new File(Constants.GAME_DIR,"natives");
-        File[] fList = folder.listFiles();
 
-        for (File file : Objects.requireNonNull(fList)) {
-            String pes = file.getPath();
-            if (pes.contains(".git") || pes.contains(".sha1")) {
-                file.delete();
-            }
-        }
-        Arrays.asList(Objects.requireNonNull(new File(Constants.GAME_DIR, "tmp").listFiles())).forEach(File::delete);
-        new File(Constants.GAME_DIR,"tmp").delete();
-
-        currentAction = "Tartalom frissítése";
+        currentAction = "Tartalom friss\u00EDt\u00E9se";
         progress = 0;
 
         FileUtils.copyURLToFile(new URL("https://bendimester23.tk/assets/content.json"),
@@ -145,22 +102,23 @@ public class Updater {
         float c = 0;
         float m = content.mods.size();
         for (ContentIndex.Mod mod : content.mods) {
-            currentAction = "Tartalom frissítése: " + mod.name;
+            currentAction = "Tartalom friss\u00EDt\u00E9se: " + mod.name;
             c++;
             progress = (c)/m;
             File f = new File(Constants.MODS_DIR, mod.fileName + ".jar");
             if (!f.exists()) {
-                System.out.println("[Launcher] Downloading content " + mod.fileName);
+                LOGGER.info("Downloading content " + mod.fileName);
                 FileUtils.copyURLToFile(new URL(mod.url), f);
             }else if (!Crypto.calcSHA1(f).equalsIgnoreCase(mod.sha1)) {
-                System.out.println("[Launcher] Updating content " + mod.fileName);
+                LOGGER.info("Updating content " + mod.fileName);
                 FileUtils.copyURLToFile(new URL(mod.url), f);
             }
         }
 
-        currentAction = "Indításra kész.";
+        currentAction = "Ind\u00EDt\u00E1sra k\u00E9sz.";
         progress = 0;
         canPlay = true;
+        LOGGER.info("Update check done.");
     }
 
     private void downloadAssets(URL assetIndex) throws IOException {
@@ -187,7 +145,7 @@ public class Updater {
     }
 
     private void downloadAsset(String hash) throws IOException {
-        URL url = new URL("http://resources.download.minecraft.net/"+hash.substring(0,2)+"/"+hash);
+        URL url = new URL("https://resources.download.minecraft.net/" +hash.substring(0,2)+"/"+hash);
         File path = new File(Constants.GAME_DIR,"assets"+File.separator+"objects"+File.separator
             +hash.substring(0,2));
         if (!path.exists()) path.mkdirs();
@@ -195,8 +153,11 @@ public class Updater {
         if (!asset.exists()) FileUtils.copyURLToFile(url,asset);
     }
 
+    int nativeIndex = 0;
+
     private void updateLibrary(Version.Library lib) throws IOException {
-        currentAction = "Könyvtár letöltése: " + lib.name;
+        LOGGER.info("Downloading library " + lib.name);
+        currentAction = "K\u00F6nyvt\u00E1r let\u00F6lt\u00E9se: " + lib.name;
         File libFile = null;
         try {
             libFile = getLibPath(lib.name);
@@ -207,8 +168,6 @@ public class Updater {
         if (!Objects.requireNonNull(libFile).exists()) FileUtils.copyURLToFile(new URL(download.url), libFile);
         else if (!Crypto.calcSHA1(libFile).equalsIgnoreCase(download.sha1)) FileUtils.copyURLToFile(new URL(download.url), libFile);
 
-        OsUtils.OS os = new OsUtils().getOs();
-
         if (lib.natives != null && lib.downloads != null) {
             String url = "";
             switch (os) {
@@ -218,6 +177,7 @@ public class Updater {
                     }
                     break;
                 case OSX:
+                    LOGGER.warning("Downloaded OSX library! The launcher has no OSX support!");
                     if (lib.natives.get("osx") != null) {
                         url = lib.downloads.get(lib.natives.get("osx")).url;
                     }
@@ -228,11 +188,10 @@ public class Updater {
                     }
                     break;
             }
-            File tmp = new File(Constants.GAME_DIR,"tmp");
-            if (!tmp.exists()) tmp.mkdirs();
-            FileUtils.copyURLToFile(new URL(url),new File(tmp,lib.name.replaceAll(":","_")+".jar"));
-
-            unZipFile(new File(tmp,lib.name.replaceAll(":","_")+".jar"));
+            LOGGER.info("Downloading natives for " + lib.name);
+            LOGGER.info("Url: " + url + " Path: " + new File(Constants.NATIVES_DIR,"native" + nativeIndex+".jar").getAbsolutePath());
+            FileUtils.copyURLToFile(new URL(url), new File(Constants.NATIVES_DIR,"native" + nativeIndex+".jar"));
+            nativeIndex++;
         }
     }
 }
