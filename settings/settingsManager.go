@@ -65,7 +65,7 @@ func initDefaultConfig() {
 func GetConfigPath() string {
 	switch runtime.GOOS {
 	case "windows":
-		return os.Getenv("APPDATA") + ".\\skyvillage\\launcher.json"
+		return os.Getenv("APPDATA") + "\\.skyvillage\\launcher.json"
 	default:
 		return os.Getenv("HOME") + "/.skyvillage/launcher.json"
 	}
