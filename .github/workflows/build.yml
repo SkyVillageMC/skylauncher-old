@@ -35,9 +35,10 @@ jobs:
         uses: ibrt/golang-github-action@v1
         with:
           go-version: 1.16
-
+      - name: Set env
+        run: set CGO_ENABLED=0
       - name: Go Release Binary
-        run: go build -o C:\out.exe
+        run: go build -a -installsuffix cgo -o C:\out.exe
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2.2.4
         with:
