@@ -8,7 +8,6 @@ import (
 	"path"
 	"runtime"
 	"skyvillage-launcher-rewrite/utils"
-	"syscall"
 )
 
 var (
@@ -24,11 +23,6 @@ func LaunchGame(username, uuid, sessionId string) error {
 	cmd := exec.Command("java", GetArgs(username, uuid, sessionId)...)
 	cmd.Stdout = os.Stdout
 	cmd.Dir = utils.GameDir
-	cmd.SysProcAttr = &syscall.SysProcAttr{
-		Setpgid:   true,
-		Pdeathsig: syscall.SIGUSR1,
-		Pgid:      os.Getpid(),
-	}
 
 	version = *new(utils.VersionManifest)
 	err := cmd.Run()
