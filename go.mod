@@ -2,4 +2,7 @@ module skyvillage-launcher-rewrite
 
 go 1.16
 
-require fyne.io/fyne/v2 v2.0.3
+require (
+	fyne.io/fyne/v2 v2.0.3
+	golang.org/x/mod v0.2.0
+)

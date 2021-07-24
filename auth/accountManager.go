@@ -15,3 +15,7 @@ func Logout() {
 func IsLoggedIn() bool {
 	return settings.GetSettings().IsLoggedIn
 }
+
+func GetUsername() string {
+	return settings.CurrentSettings.Username
+}
