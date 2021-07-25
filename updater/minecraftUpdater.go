@@ -2,7 +2,9 @@ package updater
 
 import (
 	"fmt"
+	"fyne.io/fyne/v2/dialog"
 	"log"
+	"os"
 	"path"
 	"skyvillage-launcher-rewrite/launcher"
 	"skyvillage-launcher-rewrite/utils"
@@ -11,6 +13,7 @@ import (
 
 var (
 	version    utils.VersionManifest
+	mods       utils.ContentIndex
 	assetIndex utils.Assets
 )
 
@@ -27,10 +30,39 @@ func CheckForUpdates() error {
 	checkLibraries()
 	checkNatives()
 	checkAssets()
+	checkMods()
 	views.SetProgressBar(0)
 	views.SetCurrentTask("Indításra kész!")
 	views.AllowPlay()
 	return nil
+}
+
+func checkMods() {
+	err := utils.GetStringAsJson("https://bendimester23.tk/assets/content.json", &mods)
+	if err != nil {
+		log.Println(err.Error())
+		dialog.ShowError(err, views.MainWindow)
+		return
+	}
+	utils.ForEachFile(path.Join(utils.GameDir, "mods"), func(name string) {
+		if !utils.NeedMod(mods.Mods, name) {
+			err := os.Remove(path.Join(utils.GameDir, "mods", name))
+			if err != nil {
+				log.Println(err.Error())
+			}
+		}
+	})
+	for i, m := range mods.Mods {
+		views.SetCurrentTask(fmt.Sprintf("(%d/%d) Tartalom letöltése: %s", i, len(mods.Mods), m.Name))
+		mP := path.Join(utils.GameDir, "mods", m.FileName)
+		if !utils.ExistsAndValid(mP, m.Hash) {
+			err := utils.StartDownloadJob(m.Url, mP)
+			if err != nil {
+				log.Println(err.Error())
+				return
+			}
+		}
+	}
 }
 
 func checkAssets() {

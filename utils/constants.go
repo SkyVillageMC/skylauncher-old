@@ -73,3 +73,12 @@ func GetNativesName() string {
 	}
 	return ""
 }
+
+func NeedMod(arr []Mod, elem string) bool {
+	for _, i := range arr {
+		if i.FileName == elem {
+			return true
+		}
+	}
+	return false
+}

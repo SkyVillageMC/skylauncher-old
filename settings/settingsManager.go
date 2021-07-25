@@ -55,6 +55,10 @@ func initDefaultConfig() {
 	if err != nil {
 		log.Fatalf("Error creating config\n%s\n", err.Error())
 	}
+	err = os.MkdirAll(GetConfigPath(), os.ModeDir)
+	if err != nil {
+		log.Fatalf("Error creating config\n%s\n", err.Error())
+	}
 	d, _ := json.Marshal(defaultConfig)
 	_, err = f.Write(d)
 	if err != nil {

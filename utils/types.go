@@ -42,6 +42,17 @@ type Assets struct {
 	Objects map[string]Object `json:"objects"`
 }
 
+type Mod struct {
+	Name     string `json:"name,omitempty"`
+	FileName string `json:"fileName,omitempty"`
+	Url      string `json:"url,omitempty"`
+	Hash     string `json:"sha1,omitempty"`
+}
+
+type ContentIndex struct {
+	Mods []Mod `json:"mods,omitempty"`
+}
+
 type Object struct {
 	Hash string `json:"hash,omitempty"`
 	Size int32  `json:"size,omitempty"`

@@ -30,12 +30,6 @@ func LaunchGame(username, uuid, sessionId string) error {
 		log.Println(err.Error())
 		return err
 	}
-
-	//err = cmd.Process.Release()
-	//if err != nil {
-	//	log.Println(err.Error())
-	//}
-
 	return nil
 }
 
